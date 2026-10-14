@@ -25,7 +25,7 @@ macro_rules! i2f_bits {
         0x3FF0000000000000
     };
     (64 bias) => {
-        11
+        12
     };
 }
 pub(crate) use i2f_bits;
