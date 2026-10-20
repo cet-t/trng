@@ -1,13 +1,13 @@
 [package]
-name = "urng_core"
-version = "0.1.2"
+name = "trng"
+version = "0.1.0"
 edition = "2024"
 rust-version = "1.86"
 keywords = ["no_std", "random", "rng"]
-description = "A minimal rng core library"
+description = "A tiny RNG abstraction crate"
 readme = "crates-readme.md"
 authors = ["cet"]
-repository = "https://github.com/cet-t/urng_core"
+repository = "https://github.com/cet-t/trng"
 license = "MIT OR Apache-2.0"
 
 [dependencies]

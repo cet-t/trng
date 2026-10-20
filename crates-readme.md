@@ -1,11 +1,11 @@
-# urng_core
+# trng
 
-A minimal, `no_std` random number generator core where the internal state is expressed as a type.
+A tiny, `no_std`, allocation-free abstraction for random number generators.
 
 ## Usage
 
 ```rust
-use urng_core::Rng;
+use trng::Rng;
 
 struct XorShift32 {
     state: u32,
@@ -36,8 +36,8 @@ fn main() {
 
 ## Notes
 
-- **Not suitable for cryptographic use.**
-  - This crate does not provide cryptographic guarantees. The bias described below can be exploited when generating keys, nonces, or tokens.
+- **No cryptographic security guarantees.**
+  - Implementing `Rng` does not imply that a generator is cryptographically secure. In particular, the biased `randi` mapping is unsuitable where unbiased sampling is required.
 
 - **`randi` has a slight bias.** This function uses "multiply-shift" to map a word to the range `[min, max]` without rejection sampling. Let `N` be the word width (32 or 64) and `range = max - min + 1`. Then:
   - If `2^N` is divisible by `range` (e.g., `range` is a power of two), the result is perfectly uniform.

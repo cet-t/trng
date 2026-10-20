@@ -4,7 +4,9 @@ mod sealed {
     impl self::Sealed for u64 {}
 }
 
-/// The unsigned output word of a generator ([`u32`], [`u64`]).
+/// An unsigned output word supported by [`Rng`](crate::Rng).
+///
+/// This trait is sealed and implemented only for `u32` and `u64`.
 pub trait Word: self::sealed::Sealed {
     /// The signed integer type used for ranged draws ([`i32`] / [`i64`]).
     type Int: Copy + Sized;
@@ -12,15 +14,20 @@ pub trait Word: self::sealed::Sealed {
     /// The float type produced from this word ([`f32`] for [`u32`], [`f64`] for [`u64`]).
     type Float: Copy + Sized;
 
-    /// Convert this word to a float in the range `[0.0, 1.0)`.
+    /// Converts this word to a floating-point value in `[0.0, 1.0)`.
     #[must_use]
     fn to_float(self) -> Self::Float;
 
-    /// Draw a random integer in the range `[min, max]`.
+    /// Maps this word to a signed integer in the inclusive range `[min, max]`.
+    ///
+    /// Uses multiply-shift reduction, which can introduce bias.
+    /// The caller must ensure `min <= max`; this is not checked.
     #[must_use]
     fn randi(self, min: Self::Int, max: Self::Int) -> Self::Int;
 
-    /// Draw a random float in the range `[min, max)`.
+    /// Maps this word to a floating-point value in `[min, max)` for finite
+    /// bounds with `min < max`, subject to floating-point arithmetic limitations.
+    /// Bounds are not validated.
     #[must_use]
     fn randf(self, min: Self::Float, max: Self::Float) -> Self::Float;
 }
