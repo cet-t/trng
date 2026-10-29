@@ -11,6 +11,12 @@ struct XorShift32 {
     state: u32,
 }
 
+impl From<u32> for XorShift32 {
+    fn from(value: u32) -> Self {
+        Self { state: value }
+    }
+}
+
 impl Rng for XorShift32 {
     type Word = u32;
 
@@ -25,7 +31,7 @@ impl Rng for XorShift32 {
 }
 
 fn main() {
-    let mut rng = XorShift32 { state: 2463534242 };
+    let mut rng = XorShift32::from(2463534242);
 
     let _: u32 = rng.nextu();             // [0, 2^32-1]
     let _: f32 = rng.nextf();             // [0, 1)
